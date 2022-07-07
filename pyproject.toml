@@ -17,10 +17,6 @@ classifiers = [
 ]
 include = ["pygraphic/py.typed"]
 
-[build-system]
-requires = ["poetry>=1.2.0b1", "poetry-dynamic-versioning-plugin"]
-build-backend = "poetry.masonry.api"
-
 [tool.poetry.dependencies]
 python = "^3.10"
 
@@ -37,3 +33,7 @@ indent = 4
 combine_star = true
 combine_as_imports = true
 lines_after_imports = 2
+
+[build-system]
+requires = ["poetry>=1.2.0b1", "poetry-dynamic-versioning-plugin"]
+build-backend = "poetry.masonry.api"
