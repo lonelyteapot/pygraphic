@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "pygraphic"
+version = "0.0.0"
+description = "Client-side GraphQL query generator & parser based on Pydantic"
+authors = ["Dmitry Semenov <lonelyteapot@gmail.com>"]
+repository = "https://github.com/lonelyteapot/pygraphic"
+license = "MIT"
+readme = "README.md"
+keywords = ["graphql", "api", "query"]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+include = ["pygraphic/py.typed"]
+
+[build-system]
+requires = ["poetry>=1.2.0b1", "poetry-dynamic-versioning-plugin"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+src_paths = ["pygraphic", "tests"]
+profile = "black"
+indent = 4
+combine_star = true
+combine_as_imports = true
+lines_after_imports = 2
