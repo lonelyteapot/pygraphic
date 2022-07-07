@@ -20,6 +20,13 @@ include = ["pygraphic/py.typed"]
 [tool.poetry.dependencies]
 python = "^3.10"
 
+[tool.poetry.group.dev.dependencies]
+black = "^22.6.0"
+mypy = "^0.961"
+flake8 = "^4.0.1"
+bandit = "^1.7.4"
+pylint = "^2.14.4"
+
 [tool.poetry-dynamic-versioning]
 enable = true
 
