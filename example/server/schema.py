@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
 from random import randrange
 from uuid import UUID, uuid4
 
@@ -29,13 +28,3 @@ class Query:
 
 
 schema = strawberry.Schema(query=Query)
-
-
-def generate_schema_file(directory: Path):
-    directory.joinpath("server_schema.gql").write_text(
-        schema.as_str(), encoding="utf-8"
-    )
-
-
-if __name__ == "__main__":
-    generate_schema_file(Path("tests", "golden"))
