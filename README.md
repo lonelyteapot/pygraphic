@@ -1,6 +1,6 @@
 # pygraphic
 
-Client-side GraphQL query generator & parser based on [pydantic].
+Client-side GraphQL query generator based on [pydantic].
 
 ## Why?
 
@@ -25,8 +25,8 @@ Pygraphic is the opposite of [turms]:
 3. Using a GraphQL or an HTTP client, you make requests with those documents and get
    back JSON responses;
 
-4. Pygraphic converts those responses to instances of the defined models, which are
-   validated by pydantic;
+4. Pydantic converts those responses to instances of the defined models and validates
+   them;
 
 5. You use the validated data, while enjoying autocompletion and type safety!
 
@@ -35,7 +35,7 @@ Pygraphic is the opposite of [turms]:
 Pygraphic is in development stage. Major features might either be missing or work
 incorrectly. The API may change at any time.
 
-- [ ] Basic queries
+- [x] Basic queries
 - [ ] Queries with parameters
 - [ ] Custom scalars
 - [ ] Mutations
@@ -46,68 +46,76 @@ incorrectly. The API may change at any time.
 ## Example
 
 ### Server's schema
-
-    type User {
-        id: UUID!
-        username: String!
-        friends: [User!]!
-    }
+``` gql
+type User {
+  id: UUID!
+  name: String!
+  friends: [User!]!
+}
+```
 
 ### get_all_users.py
 
-    from future import __annotations__
-    from pygraphic import GQLType, GQLQuery
-    
-    class User(GQLType):
-        id: UUID
-        username: str
-        friends: list[UserFriend]
+``` python
+from __future__ import annotations
+from uuid import UUID
+from pygraphic import GQLQuery, GQLType
 
-    class UserFriend(GQLType):
-        id: UUID
-        username: str
+class User(GQLType):
+    id: UUID
+    name: str
+    friends: list[UserFriend]
 
-    class GetAllUsers(GQLQuery):
-        users: list[User]
+class UserFriend(GQLType):
+    id: UUID
+    name: str
+
+class GetAllUsers(GQLQuery):
+    users: list[User]
+```
 
 ### main.py
 
-    import httpx
-    from .get_all_users import GetAllUsers
-    
-    # Generate query string
-    gql = str(GetAllUsers)
-    
-    # Make the request
-    url = "http://127.0.0.1/graphql"
-    response = httpx.post(url, gql)
-    
-    # Extract data from the response
-    data = response.json().get("data")
-    if data is None:
-        # Query failed
-        raise Exception(response.get("error"))
-      
-    # Parse the data
-    result = GetAllUsers.from_json(response.json())
-    
-    # Print validated data
-    for user in result.users:
-        print(user.username)
-        print(user.friends)
+``` python
+import requests
+from .get_all_users import GetAllUsers
+
+# Generate query string
+gql = GetAllUsers.get_query_string()
+
+# Make the request
+url = "http://127.0.0.1/graphql"
+response = requests.post(url, data=gql)
+
+# Extract data from the response
+json = response.json()
+data = json.get("data")
+if data is None:
+    raise Exception("Query failed", json.get("error"))
+
+# Parse the data
+result = GetAllUsers.parse_obj(data)
+
+# Print validated data
+for user in result.users:
+    print(user.name)
+    print(user.friends)
+```
 
 ### Generated query string
 
-    query GetAllUsers {
-        users {
-            id
-            username
-            friends {
-                id
-                username
-            }
-        }
+``` gql
+query GetAllUsers {
+  users {
+    id
+    name
+    friends {
+      id
+      name
     }
+  }
+}
+```
 
 ## Contribution
 
