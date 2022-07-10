@@ -85,7 +85,7 @@ gql = GetAllUsers.get_query_string()
 
 # Make the request
 url = "http://127.0.0.1/graphql"
-response = requests.post(url, data=gql)
+response = requests.post(url, json={"query": gql})
 
 # Extract data from the response
 json = response.json()

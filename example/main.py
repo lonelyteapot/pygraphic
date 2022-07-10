@@ -1,14 +1,19 @@
 import requests
 
 from .get_all_users import GetAllUsers
+from .server import start_server
+
+
+# Start a local debug server to showcase the example
+start_server()
 
 
 # Generate query string
 gql = GetAllUsers.get_query_string()
 
 # Make the request
-url = "http://127.0.0.1/graphql"
-response = requests.post(url, data=gql)
+url = "http://127.0.0.1:8000/graphql"
+response = requests.post(url, json={"query": gql})
 
 # Extract data from the response
 json = response.json()
