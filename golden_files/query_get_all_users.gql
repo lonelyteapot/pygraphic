@@ -5,6 +5,7 @@ query GetAllUsers {
     age
     balance
     isActive
+    lastSeen
     friends {
       id
       name

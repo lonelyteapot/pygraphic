@@ -4,26 +4,24 @@ from typing import Iterator
 
 import pydantic
 
-from ._scalars import KNOWN_SCALARS
-
 
 class GQLType(pydantic.BaseModel):
     @classmethod
     def generate_query_lines(cls, nest_level: int = 0) -> Iterator[str]:
         fields = typing.get_type_hints(cls)
         for field_name, field_type in fields.items():
-            if field_type in KNOWN_SCALARS:
-                yield "  " * nest_level + field_name
-                continue
             if typing.get_origin(field_type) is list:
                 args = typing.get_args(field_type)
                 assert len(args) == 1
                 field_type = args[0]
-            if inspect.isclass(field_type) and issubclass(field_type, GQLType):
+            if not inspect.isclass(field_type):
+                raise Exception(f"Type {field_type} not supported")
+            if issubclass(field_type, GQLType):
                 field_type.update_forward_refs()
                 yield "  " * nest_level + field_name + " {"
                 for line in field_type.generate_query_lines(nest_level=nest_level + 1):
                     yield line
                 yield "  " * nest_level + "}"
                 continue
-            raise NotImplementedError(f"Type {field_type} not supported")
+            yield "  " * nest_level + field_name
+            continue

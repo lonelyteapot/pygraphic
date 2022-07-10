@@ -5,6 +5,7 @@ query {
     age
     balance
     isActive
+    lastSeen
     friends {
       id
       name

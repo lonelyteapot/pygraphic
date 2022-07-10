@@ -1,12 +1,18 @@
+"""Date with time (isoformat)"""
+scalar DateTime
+
 type Query {
   users: [User!]!
 }
 
+scalar UUID
+
 type User {
-  id: ID!
+  id: UUID!
   name: String!
   age: Int!
   balance: Float!
   isActive: Boolean!
+  lastSeen: DateTime!
   friends: [User!]!
 }
