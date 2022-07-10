@@ -8,7 +8,7 @@ Working with GraphQL in Python seems simple... If you're fine with dictionaries,
 autocompletion and unexpected errors.
 
 Some tools allow you to generate Python code from GraphQL schemas. One of them, [turms],
-even generates pydantic models from GQL documents. We find this approach problematic:
+even generates pydantic models from GQL documents. This approach can be problematic:
 queries are written in GraphQL, not Python, so the codebase you're actually working with
 is out of your control; and the main advantage of pydantic — data validation — is
 missing!
@@ -18,7 +18,7 @@ missing!
 Pygraphic is the opposite of [turms]:
 
 1. For each individual query, you define pydantic models that you want to request,
-   optionally with validators and other configurations;
+   optionally with validators and other configuration;
 
 2. Pygraphic converts those definitions to raw GraphQL documents *(basically strings)*;
 
@@ -40,12 +40,12 @@ incorrectly. The API may change at any time.
 - [ ] Custom scalars
 - [ ] Mutations
 - [ ] Subscriptions
-- [ ] Tests
+- [x] Tests
 - [ ] Stable codebase
 
 ## Example
 
-### Server's schema
+### Server schema
 ``` gql
 type User {
   id: UUID!

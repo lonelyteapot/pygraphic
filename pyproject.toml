@@ -6,7 +6,9 @@ authors = ["Dmitry Semenov <lonelyteapot@gmail.com>"]
 repository = "https://github.com/lonelyteapot/pygraphic"
 license = "MIT"
 readme = "README.md"
-keywords = ["graphql", "api", "query"]
+keywords = [
+    "graphql-query-generator", "graphql-codegen", "graphql", "query", "pydantic"
+]
 classifiers = [
     "Development Status :: 1 - Planning",
     "Intended Audience :: Developers",
