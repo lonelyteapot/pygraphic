@@ -6,4 +6,4 @@ import pytest
 @pytest.fixture
 def golden_dir():
     """Return the directory of the currently running test script"""
-    return Path("tests", "golden")
+    return Path("golden_files")

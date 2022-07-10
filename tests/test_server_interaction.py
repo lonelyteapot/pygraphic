@@ -1,5 +1,5 @@
-from .get_all_users import GetAllUsers
-from .server.schema import schema
+from example.get_all_users import GetAllUsers
+from example.server.schema import schema
 
 
 def test_local_query_execution():

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from .get_all_users import GetAllUsers
+from example.get_all_users import GetAllUsers
 
 
 def test_unnamed_query_generation(golden_dir: Path):

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from .schema import schema
+from example.server.schema import schema
 
 
 def test_schema_matches_golden(golden_dir: Path):
