@@ -2,6 +2,9 @@ query {
   users {
     id
     name
+    age
+    balance
+    isActive
     friends {
       id
       name

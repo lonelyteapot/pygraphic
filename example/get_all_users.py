@@ -1,18 +1,19 @@
 from __future__ import annotations
 
-from uuid import UUID
-
-from pygraphic import GQLQuery, GQLType
+from pygraphic import ID, GQLQuery, GQLType
 
 
 class User(GQLType):
-    id: UUID
+    id: ID
     name: str
+    age: int
+    balance: float
+    isActive: bool
     friends: list[UserFriend]
 
 
 class UserFriend(GQLType):
-    id: UUID
+    id: ID
     name: str
 
 

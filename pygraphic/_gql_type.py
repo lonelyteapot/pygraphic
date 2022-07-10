@@ -1,13 +1,10 @@
 import inspect
 import typing
 from typing import Iterator
-from uuid import UUID
 
 import pydantic
 
-
-# TODO Implement proper scalar definitions
-SCALARS = (str, int, UUID)
+from ._scalars import KNOWN_SCALARS
 
 
 class GQLType(pydantic.BaseModel):
@@ -15,7 +12,7 @@ class GQLType(pydantic.BaseModel):
     def generate_query_lines(cls, nest_level: int = 0) -> Iterator[str]:
         fields = typing.get_type_hints(cls)
         for field_name, field_type in fields.items():
-            if field_type in SCALARS:
+            if field_type in KNOWN_SCALARS:
                 yield "  " * nest_level + field_name
                 continue
             if typing.get_origin(field_type) is list:
