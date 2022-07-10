@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "Regenerate expected server schema",
+        "type": "python",
+        "request": "launch",
+        "program": "tests/server/schema.py",
+        "console": "integratedTerminal",
+        "justMyCode": true,
+    }]
+}

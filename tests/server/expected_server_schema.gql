@@ -1,0 +1,11 @@
+type Query {
+  users: [User!]!
+}
+
+scalar UUID
+
+type User {
+  id: UUID!
+  name: String!
+  friends: [User!]!
+}
