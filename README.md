@@ -37,7 +37,7 @@ incorrectly. The API may change at any time.
 
 - [x] Basic queries
 - [ ] Queries with parameters
-- [ ] Custom scalars
+- [x] Custom scalars (not needed, comes with pydantic)
 - [ ] Mutations
 - [ ] Subscriptions
 - [x] Tests
