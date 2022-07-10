@@ -1,0 +1,46 @@
+name: Unit tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+        poetry-version: ["1.2.0b2"]
+        os: [ubuntu-latest]
+    name: Python ${{ matrix.python-version }} with Poetry ${{ matrix. poetry-version }} on ${{ matrix.os }}
+    
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install Poetry
+      run: pipx install poetry==${{ matrix.poetry-version }}
+    - name: Install dynamic versioning plugin
+      run: poetry self add poetry-dynamic-versioning-plugin
+    - name: Install Python
+      uses: actions/setup-python@v4
+      id: setup-python
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: "poetry"
+    - name: Switch Poetry environment
+      run: poetry env use ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: poetry install
+      if: steps.setup-python.outputs.cache-hit != 'true'
+    - name: Show the current package version
+      run: poetry version
+    - name: Run flake8 linter
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+    - name: Run pytest
+      run: poetry run pytest
