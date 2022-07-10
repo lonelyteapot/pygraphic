@@ -1,0 +1,10 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "Example",
+        "type": "python",
+        "request": "launch",
+        "module": "example.main",
+        "justMyCode": true,
+    }]
+}

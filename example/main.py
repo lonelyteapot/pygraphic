@@ -1,5 +1,7 @@
 import requests
+
 from .get_all_users import GetAllUsers
+
 
 # Generate query string
 gql = GetAllUsers.get_query_string()
