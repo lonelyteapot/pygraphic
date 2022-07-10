@@ -23,6 +23,7 @@ class GQLType(pydantic.BaseModel):
                 assert len(args) == 1
                 field_type = args[0]
             if inspect.isclass(field_type) and issubclass(field_type, GQLType):
+                field_type.update_forward_refs()
                 yield "  " * nest_level + field_name + " {"
                 for line in field_type.generate_query_lines(nest_level=nest_level + 1):
                     yield line
