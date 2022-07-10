@@ -9,7 +9,7 @@ class GQLQuery(GQLType):
                 yield "query " + cls.__name__ + " {"
             else:
                 yield "query {"
-            for line in cls.generate_query_lines():
+            for line in cls.generate_query_lines(nest_level=1):
                 yield line
             yield "}"
 

@@ -12,7 +12,7 @@ SCALARS = (str, int, UUID)
 
 class GQLType(pydantic.BaseModel):
     @classmethod
-    def generate_query_lines(cls, nest_level: int = 1) -> Iterator[str]:
+    def generate_query_lines(cls, nest_level: int = 0) -> Iterator[str]:
         fields = typing.get_type_hints(cls)
         for field_name, field_type in fields.items():
             if field_type in SCALARS:
