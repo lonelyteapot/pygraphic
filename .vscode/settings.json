@@ -15,5 +15,8 @@
     "python.formatting.provider": "black",
     "python.sortImports.path": "isort",
     "python.languageServer": "Pylance",
-    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": ["tests"],
 }

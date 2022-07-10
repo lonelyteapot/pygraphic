@@ -1,0 +1,10 @@
+query {
+  users {
+    id
+    username
+    friends {
+      id
+      username
+    }
+  }
+}
