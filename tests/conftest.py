@@ -1,10 +1,9 @@
 from pathlib import Path
 
 import pytest
-from pytest import FixtureRequest
 
 
 @pytest.fixture
-def script_directory(request: FixtureRequest):
+def golden_dir():
     """Return the directory of the currently running test script"""
-    return Path(request.path).parent
+    return Path("tests", "golden")

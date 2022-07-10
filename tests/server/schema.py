@@ -32,10 +32,10 @@ schema = strawberry.Schema(query=Query)
 
 
 def generate_schema_file(directory: Path):
-    directory.joinpath("expected_server_schema.gql").write_text(
+    directory.joinpath("server_schema.gql").write_text(
         schema.as_str(), encoding="utf-8"
     )
 
 
 if __name__ == "__main__":
-    generate_schema_file(Path(__file__).parent)
+    generate_schema_file(Path("tests", "golden"))
