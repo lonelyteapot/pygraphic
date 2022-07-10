@@ -1,2 +1,2 @@
-from .gql_query import GQLQuery
-from .gql_type import GQLType
+from ._gql_query import GQLQuery
+from ._gql_type import GQLType

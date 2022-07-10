@@ -1,4 +1,4 @@
-from .gql_type import GQLType
+from ._gql_type import GQLType
 
 
 class GQLQuery(GQLType):
