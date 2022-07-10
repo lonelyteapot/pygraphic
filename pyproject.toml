@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pygraphic"
-version = "0.0.0"
+version = "0.0"
 description = "Client-side GraphQL query generator based on Pydantic"
 authors = ["Dmitry Semenov <lonelyteapot@gmail.com>"]
 repository = "https://github.com/lonelyteapot/pygraphic"
