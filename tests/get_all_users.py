@@ -7,13 +7,13 @@ from pygraphic import GQLQuery, GQLType
 
 class User(GQLType):
     id: UUID
-    username: str
+    name: str
     friends: list[UserFriend]
 
 
 class UserFriend(GQLType):
     id: UUID
-    username: str
+    name: str
 
 
 class GetAllUsers(GQLQuery):
