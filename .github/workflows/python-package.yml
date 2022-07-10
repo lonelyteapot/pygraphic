@@ -15,16 +15,20 @@ jobs:
         poetry-version: ["1.2.0b2"]
         os: [ubuntu-latest, windows-latest]
     name: Python ${{ matrix.python-version }}
+    
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
+    - run: pipx install poetry==${{ matrix.poetry-version }}
     - uses: actions/setup-python@v4
+      id: setup-python
       with:
         python-version: ${{ matrix.python-version }}
         cache: "poetry"
-    - run: pipx install poetry==${{ matrix.poetry-version }}
-    - name: Install dependencies
-      run: poetry install
+        
+    - run: poetry env use ${{ matrix.python-version }}
+    - run: poetry install
+      #if: steps.setup-python.outputs.cache-hit != 'true'
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
