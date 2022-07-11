@@ -19,6 +19,9 @@ classifiers = [
 ]
 include = ["pygraphic/py.typed"]
 
+[tool.poetry.urls]
+"Examples" = "https://github.com/lonelyteapot/pygraphic/tree/main/examples"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = "^1.9.1"
