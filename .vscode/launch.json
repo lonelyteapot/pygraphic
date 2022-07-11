@@ -1,10 +1,10 @@
 {
     "version": "0.2.0",
     "configurations": [{
-        "name": "Example",
+        "name": "Example :: Basic Query",
         "type": "python",
         "request": "launch",
-        "module": "example.main",
+        "module": "examples.basic_query.main",
         "justMyCode": true,
     }]
 }

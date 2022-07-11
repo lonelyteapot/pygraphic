@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from example.server.schema import schema
+from examples.server.schema import schema
 
 
 if __name__ == "__main__":

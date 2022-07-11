@@ -1,7 +1,7 @@
 import requests
 
+from ..server import start_server
 from .get_all_users import GetAllUsers
-from .server import start_server
 
 
 # Start a local debug server to showcase the example
