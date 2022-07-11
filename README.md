@@ -38,6 +38,7 @@ incorrectly. The API may change at any time.
 - [x] Basic queries
 - [x] Queries with parameters
 - [x] Custom scalars (not needed, comes with pydantic)
+- [ ] Conversion between camelCase and snake_case
 - [ ] Mutations
 - [ ] Subscriptions
 - [x] Tests
