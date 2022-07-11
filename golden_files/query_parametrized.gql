@@ -1,0 +1,10 @@
+query GetUsersBornAfter($bornAfter: Date) {
+  users(bornAfter: $bornAfter) {
+    username
+    birthday
+    friends(onlineOnly: true) {
+      username
+      isOnline
+    }
+  }
+}
