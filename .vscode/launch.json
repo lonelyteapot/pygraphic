@@ -1,10 +1,18 @@
 {
     "version": "0.2.0",
     "configurations": [{
-        "name": "Example :: Basic Query",
-        "type": "python",
-        "request": "launch",
-        "module": "examples.basic_query.main",
-        "justMyCode": true,
-    }]
+            "name": "Example :: Minimal Query",
+            "type": "python",
+            "request": "launch",
+            "module": "examples.minimal_query.main",
+            "justMyCode": true,
+        },
+        {
+            "name": "Example :: Basic Query",
+            "type": "python",
+            "request": "launch",
+            "module": "examples.basic_query.main",
+            "justMyCode": true,
+        }
+    ]
 }
