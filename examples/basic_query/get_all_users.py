@@ -1,23 +1,20 @@
 from __future__ import annotations
 
-from datetime import datetime
-from uuid import UUID
+from datetime import date
 
 from pygraphic import GQLQuery, GQLType
 
 
 class User(GQLType):
-    id: UUID
+    id: int
     username: str
-    age: int
-    balance: float
-    isActive: bool
-    lastSeen: datetime
+    isOnline: bool
+    birthday: date
     friends: list[UserFriend]
 
 
 class UserFriend(GQLType):
-    id: UUID
+    id: int
     username: str
 
 

@@ -1,21 +1,18 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import date, datetime
 from random import choices, randint, randrange
 from string import ascii_lowercase
-from uuid import UUID, uuid4
 
 import strawberry
 
 
 @strawberry.type
 class User:
-    id: UUID
+    id: int
     username: str
-    age: int
-    balance: float
-    is_active: bool
-    last_seen: datetime
+    is_online: bool
+    birthday: date
     friends: list[User]
 
 
@@ -28,15 +25,13 @@ class Query:
 
 _users = [
     User(
-        id=uuid4(),
+        id=id,
         username="".join(choices(ascii_lowercase, k=randint(8, 16))),
-        age=randint(14, 80),
-        balance=randint(0, 1000) / 100,
-        is_active=bool(randint(0, 1)),
-        last_seen=datetime.now() - timedelta(minutes=randint(1, 200)),
+        is_online=bool(randint(0, 1)),
+        birthday=date.fromtimestamp(randrange(0, int(datetime.now().timestamp()))),
         friends=list(),
     )
-    for _ in range(randrange(5, 10))
+    for id in range(randrange(5, 10))
 ]
 
 for next_i, user in enumerate(_users, 1):
