@@ -1,17 +1,17 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from random import randint, randrange
+from random import choices, randint, randrange
+from string import ascii_lowercase
 from uuid import UUID, uuid4
 
 import strawberry
-from faker import Faker
 
 
 @strawberry.type
 class User:
     id: UUID
-    name: str
+    username: str
     age: int
     balance: float
     is_active: bool
@@ -26,11 +26,10 @@ class Query:
         return _users
 
 
-_fake = Faker()
 _users = [
     User(
         id=uuid4(),
-        name=_fake.name(),
+        username="".join(choices(ascii_lowercase, k=randint(8, 16))),
         age=randint(14, 80),
         balance=randint(0, 1000) / 100,
         is_active=bool(randint(0, 1)),

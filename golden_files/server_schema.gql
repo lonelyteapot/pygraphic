@@ -9,7 +9,7 @@ scalar UUID
 
 type User {
   id: UUID!
-  name: String!
+  username: String!
   age: Int!
   balance: Float!
   isActive: Boolean!

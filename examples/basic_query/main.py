@@ -19,5 +19,5 @@ result = GetAllUsers.parse_obj(response.data)
 
 # Print validated data
 for user in result.users:
-    print(user.name)
+    print(user.username)
     print(user.friends)

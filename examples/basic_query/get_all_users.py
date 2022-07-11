@@ -8,7 +8,7 @@ from pygraphic import GQLQuery, GQLType
 
 class User(GQLType):
     id: UUID
-    name: str
+    username: str
     age: int
     balance: float
     isActive: bool
@@ -18,7 +18,7 @@ class User(GQLType):
 
 class UserFriend(GQLType):
     id: UUID
-    name: str
+    username: str
 
 
 class GetAllUsers(GQLQuery):

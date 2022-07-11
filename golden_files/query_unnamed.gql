@@ -1,14 +1,14 @@
 query {
   users {
     id
-    name
+    username
     age
     balance
     isActive
     lastSeen
     friends {
       id
-      name
+      username
     }
   }
 }
