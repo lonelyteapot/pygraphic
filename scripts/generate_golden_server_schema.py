@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from example.server.schema import schema
+from examples.server import server_schema
 
 
 if __name__ == "__main__":
     Path("golden_files", "server_schema.gql").write_text(
-        schema.as_str(), encoding="utf-8"
+        server_schema.as_str(), encoding="utf-8"
     )

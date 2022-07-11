@@ -48,8 +48,8 @@ incorrectly. The API may change at any time.
 ### Server schema
 ``` gql
 type User {
-  id: UUID!
-  name: String!
+  id: int!
+  username: String!
   friends: [User!]!
 }
 ```
@@ -58,17 +58,16 @@ type User {
 
 ``` python
 from __future__ import annotations
-from uuid import UUID
 from pygraphic import GQLQuery, GQLType
 
 class User(GQLType):
-    id: UUID
-    name: str
+    id: int
+    username: str
     friends: list[UserFriend]
 
 class UserFriend(GQLType):
-    id: UUID
-    name: str
+    id: int
+    username: str
 
 class GetAllUsers(GQLQuery):
     users: list[User]
@@ -98,7 +97,7 @@ result = GetAllUsers.parse_obj(data)
 
 # Print validated data
 for user in result.users:
-    print(user.name)
+    print(user.username)
     print(user.friends)
 ```
 
@@ -108,10 +107,10 @@ for user in result.users:
 query GetAllUsers {
   users {
     id
-    name
+    username
     friends {
       id
-      name
+      username
     }
   }
 }

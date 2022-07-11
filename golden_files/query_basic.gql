@@ -1,14 +1,12 @@
 query GetAllUsers {
   users {
     id
-    name
-    age
-    balance
-    isActive
-    lastSeen
+    username
+    isOnline
+    birthday
     friends {
       id
-      name
+      username
     }
   }
 }
