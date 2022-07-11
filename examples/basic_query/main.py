@@ -1,28 +1,21 @@
-import requests
+from examples.server import server_schema
 
-from ..server import start_server
 from .get_all_users import GetAllUsers
-
-
-# Start a local debug server to showcase the example
-start_server()
 
 
 # Generate query string
 gql = GetAllUsers.get_query_string()
 
-# Make the request
-url = "http://127.0.0.1:8000/graphql"
-response = requests.post(url, json={"query": gql})
+# Typically you would send an HTTP Post request to a remote server.
+# For simplicity, this query is processed locally.
+response = server_schema.execute_sync(gql)
 
-# Extract data from the response
-json = response.json()
-data = json.get("data")
-if data is None:
-    raise Exception("Query failed", json.get("error"))
+# Handle errors
+if response.data is None:
+    raise Exception("Query failed", response.errors)
 
 # Parse the data
-result = GetAllUsers.parse_obj(data)
+result = GetAllUsers.parse_obj(response.data)
 
 # Print validated data
 for user in result.users:

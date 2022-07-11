@@ -54,6 +54,9 @@ combine_star = true
 combine_as_imports = true
 lines_after_imports = 2
 
+[tool.mypy]
+plugins = "strawberry.ext.mypy_plugin"
+
 [build-system]
 requires = ["poetry>=1.2.0b1", "poetry-dynamic-versioning-plugin"]
 build-backend = "poetry.masonry.api"
