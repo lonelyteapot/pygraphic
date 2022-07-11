@@ -3,3 +3,4 @@ Pygraphic
 turms
 Semenov
 Pydantic
+camelCase

@@ -2,7 +2,7 @@
 scalar Date
 
 type Query {
-  users: [User!]!
+  users(bornAfter: Date = null): [User!]!
 }
 
 type User {
@@ -10,5 +10,5 @@ type User {
   username: String!
   isOnline: Boolean!
   birthday: Date!
-  friends: [User!]!
+  friends(onlineOnly: Boolean! = false): [User!]!
 }

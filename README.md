@@ -36,8 +36,9 @@ Pygraphic is in development stage. Major features might either be missing or wor
 incorrectly. The API may change at any time.
 
 - [x] Basic queries
-- [ ] Queries with parameters
+- [x] Queries with parameters
 - [x] Custom scalars (not needed, comes with pydantic)
+- [ ] Conversion between camelCase and snake_case
 - [ ] Mutations
 - [ ] Subscriptions
 - [x] Tests
@@ -115,6 +116,8 @@ query GetAllUsers {
   }
 }
 ```
+
+See more in [/examples](https://github.com/lonelyteapot/pygraphic/tree/main/examples).
 
 ## Contribution
 

@@ -13,6 +13,13 @@
             "request": "launch",
             "module": "examples.basic_query.main",
             "justMyCode": true,
-        }
+        },
+        {
+            "name": "Example :: Parametrized Query",
+            "type": "python",
+            "request": "launch",
+            "module": "examples.parametrized_query.main",
+            "justMyCode": true,
+        },
     ]
 }
