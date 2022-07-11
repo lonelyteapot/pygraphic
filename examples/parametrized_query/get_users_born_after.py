@@ -5,6 +5,11 @@ from datetime import date
 from pydantic import Field
 
 from pygraphic import GQLParameters, GQLQuery, GQLType
+from pygraphic.types import register_graphql_type
+
+
+# Register the type so that pygraphic knows how to convert it to GraphQL
+register_graphql_type("Date", date)
 
 
 class Parameters(GQLParameters):

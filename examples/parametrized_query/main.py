@@ -4,10 +4,14 @@ from pprint import pprint
 
 from examples.server import server_schema
 
+import pygraphic
+
 from .get_users_born_after import GetUsersBornAfter, Parameters
 
 
+# We only want to get users born after this date
 born_after = date(year=1990, month=1, day=1)
+
 
 # Generate query string
 gql = GetUsersBornAfter.get_query_string()

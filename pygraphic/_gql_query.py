@@ -2,6 +2,7 @@ from typing import Any, Iterator, Optional
 
 from ._gql_parameters import GQLParameters
 from ._gql_type import GQLType
+from .types import class_to_graphql_type
 
 
 class GQLQuery(GQLType):
@@ -44,8 +45,3 @@ def _gen_parameter_string(parameters: Optional[type[GQLParameters]]) -> Iterator
         yield ": "
         yield class_to_graphql_type(field.type_)
     yield ")"
-
-
-def class_to_graphql_type(type_: type) -> str:
-    # TODO Proper conversion
-    return type_.__name__.capitalize()
