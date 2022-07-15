@@ -19,6 +19,6 @@ def class_to_graphql_type(python_class: type, allow_none: bool) -> str:
             return type_ + "!"
     except KeyError:
         raise KeyError(
-            f"Type '{python_class.__name__}' could not be converted to a GraphQL type. "
+            f"Type '{python_class.__name__}' could not be converted to a GraphQL type."
             "See pygraphic.types.register_graphql_type"
         )
