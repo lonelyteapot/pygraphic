@@ -14,8 +14,8 @@ from .defaults import default_alias_generator
 class ModelMetaclass(pydantic.main.ModelMetaclass):
     def __getattr__(cls, __name: str) -> Any:
         try:
-            model: type[GQLParameters] = cls  # type: ignore
-            return model.__fields__[__name]
+            mcs: type[GQLParameters] = cls  # type: ignore
+            return mcs.__fields__[__name]
         except KeyError:
             raise AttributeError(
                 f"type object '{cls.__name__}' has no attribute '{__name}'"
