@@ -1,6 +1,11 @@
+import json
+from datetime import date
 from pathlib import Path
 
-from examples.parametrized_query.get_users_born_after import GetUsersBornAfter
+from examples.parametrized_query.get_users_born_after import (
+    GetUsersBornAfter,
+    Parameters,
+)
 from examples.server import server_schema
 
 
@@ -11,15 +16,16 @@ def test_query_string_generation():
 
 def test_local_query_execution():
     query = GetUsersBornAfter.get_query_string()
-    # variables = GetAllUsers.variables()
-    result = server_schema.execute_sync(query)
+    variables = Parameters(bornAfter=date.fromtimestamp(0.0))
+    result = server_schema.execute_sync(query, json.loads(variables.json()))
     assert result.errors is None
     assert result.data is not None
 
 
 def test_pydantic_object_parsing():
     query = GetUsersBornAfter.get_query_string()
-    result = server_schema.execute_sync(query)
+    variables = Parameters(bornAfter=date.fromtimestamp(0.0))
+    result = server_schema.execute_sync(query, json.loads(variables.json()))
     assert type(result.data) is dict
     result = GetUsersBornAfter.parse_obj(result.data)
 

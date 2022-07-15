@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import date
+from typing import Optional
 
 from pydantic import Field
 
@@ -13,7 +14,7 @@ register_graphql_type("Date", date)
 
 
 class Parameters(GQLParameters):
-    bornAfter: date
+    bornAfter: Optional[date] = None
 
 
 class User(GQLType):
