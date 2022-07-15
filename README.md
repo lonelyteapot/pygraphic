@@ -47,6 +47,7 @@ incorrectly. The API may change at any time.
 ## Example
 
 ### Server schema
+
 ``` gql
 type User {
   id: int!
