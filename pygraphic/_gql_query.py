@@ -43,5 +43,5 @@ def _gen_parameter_string(parameters: Optional[type[GQLParameters]]) -> Iterator
         yield "$"
         yield name
         yield ": "
-        yield class_to_graphql_type(field.type_)
+        yield class_to_graphql_type(field.type_, allow_none=field.allow_none)
     yield ")"
