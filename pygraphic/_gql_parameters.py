@@ -22,11 +22,10 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             )
 
 
-class GQLParameters(
-    pydantic.BaseModel,
-    metaclass=ModelMetaclass,
-    alias_generator=default_alias_generator,
-    allow_population_by_field_name=True,
-):
+class GQLParameters(pydantic.BaseModel, metaclass=ModelMetaclass):
     def json(self, **kwargs: Any) -> str:
         return super().json(by_alias=True, **kwargs)
+
+    class Config:
+        alias_generator = default_alias_generator
+        allow_population_by_field_name = True

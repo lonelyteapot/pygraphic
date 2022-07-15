@@ -1,27 +1,28 @@
-from typing import Any, Iterator, Optional
+from __future__ import annotations
+
+from typing import Iterator, Optional
+
+import pydantic
 
 from ._gql_parameters import GQLParameters
 from ._gql_type import GQLType
-from .defaults import default_alias_generator
 from .types import class_to_graphql_type
 
 
-class GQLQuery(
-    GQLType,
-    alias_generator=default_alias_generator,
-    allow_population_by_field_name=True,
-):
-    __parameters__ = None
-
+class GQLQuery(GQLType):
     @classmethod
     def get_query_string(cls, named: bool = True) -> str:
-        if not named and cls.__parameters__ is not None:
+        parameters: Optional[
+            type[GQLParameters]
+        ] = cls.__config__.parameters  # type: ignore
+
+        if not named and parameters is not None:
             # TODO Find a better exception type
             raise Exception("Query with parameters must have a name")
 
         def _gen():
             if named:
-                params = "".join(_gen_parameter_string(cls.__parameters__))
+                params = "".join(_gen_parameter_string(parameters))
                 yield "query " + cls.__name__ + params + " {"
             else:
                 yield "query {"
@@ -31,14 +32,8 @@ class GQLQuery(
 
         return "\n".join(_gen())
 
-    @classmethod
-    def __init_subclass__(
-        cls,
-        parameters: Optional[type[GQLParameters]] = None,
-        **pydantic_kwargs: Any,
-    ) -> None:
-        cls.__parameters__ = parameters
-        return super().__init_subclass__(**pydantic_kwargs)
+    class Config(pydantic.BaseConfig):
+        parameters: Optional[type[GQLParameters]] = None
 
 
 def _gen_parameter_string(parameters: Optional[type[GQLParameters]]) -> Iterator[str]:
