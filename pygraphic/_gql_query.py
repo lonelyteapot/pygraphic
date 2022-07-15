@@ -2,10 +2,15 @@ from typing import Any, Iterator, Optional
 
 from ._gql_parameters import GQLParameters
 from ._gql_type import GQLType
+from .defaults import default_alias_generator
 from .types import class_to_graphql_type
 
 
-class GQLQuery(GQLType):
+class GQLQuery(
+    GQLType,
+    alias_generator=default_alias_generator,
+    allow_population_by_field_name=True,
+):
     __parameters__ = None
 
     @classmethod
@@ -39,9 +44,9 @@ def _gen_parameter_string(parameters: Optional[type[GQLParameters]]) -> Iterator
     if parameters is None or not parameters.__fields__:
         return
     yield "("
-    for name, field in parameters.__fields__.items():
+    for field in parameters.__fields__.values():
         yield "$"
-        yield name
+        yield field.alias
         yield ": "
         yield class_to_graphql_type(field.type_, allow_none=field.allow_none)
     yield ")"

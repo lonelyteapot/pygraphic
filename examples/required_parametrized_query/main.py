@@ -7,7 +7,7 @@ from .get_user import GetUser, Parameters
 
 # Generate query string
 gql = GetUser.get_query_string()
-variables = Parameters(userId=1)
+variables = Parameters(user_id=1)
 
 # Typically you would send an HTTP Post request to a remote server.
 # For simplicity, this query is processed locally.

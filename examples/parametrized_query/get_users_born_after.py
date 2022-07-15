@@ -14,19 +14,19 @@ register_graphql_type("Date", date)
 
 
 class Parameters(GQLParameters):
-    bornAfter: Optional[date] = None
+    born_after: Optional[date] = None
 
 
 class User(GQLType):
     username: str
     birthday: date
-    friends: list[UserFriend] = Field(onlineOnly=True)
+    friends: list[UserFriend] = Field(online_only=True)
 
 
 class UserFriend(GQLType):
     username: str
-    isOnline: bool
+    is_online: bool
 
 
 class GetUsersBornAfter(GQLQuery, parameters=Parameters):
-    users: list[User] = Field(bornAfter=Parameters.bornAfter)
+    users: list[User] = Field(born_after=Parameters.born_after)
