@@ -17,5 +17,4 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
 
 
 class GQLParameters(pydantic.BaseModel, metaclass=ModelMetaclass):
-    def __str__(self):
-        return ""
+    pass
