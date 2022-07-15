@@ -16,7 +16,7 @@ def test_query_string_generation():
 
 def test_local_query_execution():
     query = GetUsersBornAfter.get_query_string()
-    variables = Parameters(bornAfter=date.fromtimestamp(0.0))
+    variables = Parameters(born_after=date.fromtimestamp(0.0))
     result = server_schema.execute_sync(query, json.loads(variables.json()))
     assert result.errors is None
     assert result.data is not None
@@ -24,7 +24,7 @@ def test_local_query_execution():
 
 def test_pydantic_object_parsing():
     query = GetUsersBornAfter.get_query_string()
-    variables = Parameters(bornAfter=date.fromtimestamp(0.0))
+    variables = Parameters(born_after=date.fromtimestamp(0.0))
     result = server_schema.execute_sync(query, json.loads(variables.json()))
     assert type(result.data) is dict
     result = GetUsersBornAfter.parse_obj(result.data)
