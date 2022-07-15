@@ -9,11 +9,7 @@ from pydantic.fields import ModelField
 from .defaults import default_alias_generator
 
 
-class GQLType(
-    pydantic.BaseModel,
-    alias_generator=default_alias_generator,
-    allow_population_by_field_name=True,
-):
+class GQLType(pydantic.BaseModel):
     @classmethod
     def generate_query_lines(cls, nest_level: int = 0) -> Iterator[str]:
         fields = typing.get_type_hints(cls)
@@ -35,6 +31,10 @@ class GQLType(
                 continue
             yield "  " * nest_level + field.alias + params
             continue
+
+    class Config:
+        alias_generator = default_alias_generator
+        allow_population_by_field_name = True
 
 
 def _gen_parameter_string(parameters: dict[str, Any]) -> Iterator[str]:
