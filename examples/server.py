@@ -31,6 +31,10 @@ class Query:
             return [user for user in _users if user.birthday > born_after]
         return _users
 
+    @strawberry.field
+    def user(self, id: int) -> User:
+        return next(filter(lambda user: user.id == id, _users))
+
 
 _users = [
     User(

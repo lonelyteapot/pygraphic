@@ -1,0 +1,6 @@
+query GetUser($userId: Int!) {
+  user(id: $userId) {
+    id
+    username
+  }
+}
