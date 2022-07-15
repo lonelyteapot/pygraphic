@@ -31,6 +31,7 @@ class GQLQuery(
 
         return "\n".join(_gen())
 
+    @classmethod
     def __init_subclass__(
         cls,
         parameters: Optional[type[GQLParameters]] = None,
