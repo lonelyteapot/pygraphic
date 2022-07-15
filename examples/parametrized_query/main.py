@@ -4,8 +4,6 @@ from pprint import pprint
 
 from examples.server import server_schema
 
-import pygraphic
-
 from .get_users_born_after import GetUsersBornAfter, Parameters
 
 
@@ -15,7 +13,7 @@ born_after = date(year=1990, month=1, day=1)
 
 # Generate query string
 gql = GetUsersBornAfter.get_query_string()
-variables = Parameters(bornAfter=born_after)
+variables = Parameters(born_after=born_after)
 
 # Typically you would send an HTTP Post request to a remote server.
 # For simplicity, this query is processed locally.

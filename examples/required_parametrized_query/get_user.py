@@ -6,7 +6,7 @@ from pygraphic import GQLParameters, GQLQuery, GQLType
 
 
 class Parameters(GQLParameters):
-    userId: int
+    user_id: int
 
 
 class User(GQLType):
@@ -15,4 +15,4 @@ class User(GQLType):
 
 
 class GetUser(GQLQuery, parameters=Parameters):
-    user: User = Field(id=Parameters.userId)
+    user: User = Field(id=Parameters.user_id)

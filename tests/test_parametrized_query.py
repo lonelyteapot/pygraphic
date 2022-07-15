@@ -35,4 +35,6 @@ def test_example():
 
     assert type(result) is GetUsersBornAfter
     assert all(user.birthday > born_after for user in result.users)
-    assert all(all(friend.isOnline for friend in user.friends) for user in result.users)
+    assert all(
+        all(friend.is_online for friend in user.friends) for user in result.users
+    )

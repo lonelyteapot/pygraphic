@@ -8,7 +8,7 @@ from pygraphic import GQLQuery, GQLType
 class User(GQLType):
     id: int
     username: str
-    isOnline: bool
+    is_online: bool
     birthday: date
     friends: list[UserFriend]
 

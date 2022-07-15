@@ -14,7 +14,7 @@ def test_query_string_generation():
 
 def test_local_query_execution():
     query = GetUser.get_query_string()
-    variables = Parameters(userId=1)
+    variables = Parameters(user_id=1)
     result = server_schema.execute_sync(query, json.loads(variables.json()))
     assert result.errors is None
     assert result.data is not None
@@ -22,7 +22,7 @@ def test_local_query_execution():
 
 def test_pydantic_object_parsing():
     query = GetUser.get_query_string()
-    variables = Parameters(userId=1)
+    variables = Parameters(user_id=1)
     result = server_schema.execute_sync(query, json.loads(variables.json()))
     assert type(result.data) is dict
     result = GetUser.parse_obj(result.data)
