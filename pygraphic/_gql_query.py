@@ -6,6 +6,7 @@ import pydantic
 
 from ._gql_parameters import GQLParameters
 from ._gql_type import GQLType
+from ._utils import first_only
 from .types import class_to_graphql_type
 
 
@@ -40,7 +41,9 @@ def _gen_parameter_string(parameters: Optional[type[GQLParameters]]) -> Iterator
     if parameters is None or not parameters.__fields__:
         return
     yield "("
-    for field in parameters.__fields__.values():
+    for field, is_first in zip(parameters.__fields__.values(), first_only()):
+        if not is_first:
+            yield ", "
         yield "$"
         yield field.alias
         yield ": "

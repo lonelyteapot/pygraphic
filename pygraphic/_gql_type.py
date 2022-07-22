@@ -6,6 +6,7 @@ from typing import Any, Iterator
 import pydantic
 from pydantic.fields import ModelField
 
+from ._utils import first_only
 from .defaults import default_alias_generator
 
 
@@ -41,7 +42,9 @@ def _gen_parameter_string(parameters: dict[str, Any]) -> Iterator[str]:
     if not parameters:
         return
     yield "("
-    for name, value in parameters.items():
+    for (name, value), is_first in zip(parameters.items(), first_only()):
+        if not is_first:
+            yield ", "
         yield default_alias_generator(name)
         yield ": "
         if type(value) is ModelField:
