@@ -1,6 +1,7 @@
 import inspect
 import json
 import typing
+from enum import Enum
 from typing import Any, Iterator
 
 import pydantic
@@ -49,6 +50,9 @@ def _gen_parameter_string(parameters: dict[str, Any]) -> Iterator[str]:
         yield ": "
         if type(value) is ModelField:
             yield "$" + value.alias
+            continue
+        if isinstance(value, Enum):
+            yield value.name
             continue
         yield json.dumps(value, indent=None, default=str)
     yield ")"
