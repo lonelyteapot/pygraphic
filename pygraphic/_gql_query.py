@@ -26,8 +26,8 @@ class GQLQuery(GQLType):
                 yield "query " + cls.__name__ + variables_str + " {"
             else:
                 yield "query {"
-            for line in cls.generate_query_lines(nest_level=1):
-                yield line
+            for line in cls.generate_query_lines():
+                yield "  " + line
             yield "}"
 
         return "\n".join(_generate())
