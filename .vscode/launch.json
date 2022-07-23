@@ -23,6 +23,13 @@
             "justMyCode": true,
         },
         {
+            "name": "Example :: Arguments",
+            "type": "python",
+            "request": "launch",
+            "module": "examples.arguments",
+            "justMyCode": true,
+        },
+        {
             "name": "Example :: GitHub Unions",
             "type": "python",
             "request": "launch",

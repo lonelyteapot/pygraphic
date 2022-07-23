@@ -1,0 +1,10 @@
+query {
+  repository(owner: "lonelyteapot", name: "pygraphic") {
+    url
+    pullRequests(last: 10) {
+      nodes {
+        title
+      }
+    }
+  }
+}
