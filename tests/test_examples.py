@@ -23,6 +23,15 @@ def test_inline_fragments():
     assert all(type(node) is Repository for node in result.search.nodes)
 
 
+def test_queries():
+    golden_query = (
+        Path("golden_files", "example_queries.gql").read_text("utf-8").strip()
+    )
+    from examples.queries import query_str
+
+    assert golden_query == query_str
+
+
 def test_variables():
     golden_query = (
         Path("golden_files", "example_variables.gql").read_text("utf-8").strip()

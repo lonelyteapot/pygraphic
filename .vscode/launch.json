@@ -16,6 +16,13 @@
             "justMyCode": true,
         },
         {
+            "name": "Example :: Queries",
+            "type": "python",
+            "request": "launch",
+            "module": "examples.queries",
+            "justMyCode": true,
+        },
+        {
             "name": "Example :: Variables",
             "type": "python",
             "request": "launch",
