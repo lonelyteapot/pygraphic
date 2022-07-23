@@ -1,0 +1,2 @@
+class QueryGenerationError(Exception):
+    pass

@@ -1,51 +1,47 @@
-from __future__ import annotations
-
-from typing import Iterator, Optional
+from typing import Optional
 
 import pydantic
 
-from ._gql_parameters import GQLParameters
 from ._gql_type import GQLType
-from ._utils import first_only
+from ._gql_variables import GQLVariables
+from .exceptions import QueryGenerationError
 from .types import class_to_graphql_type
 
 
 class GQLQuery(GQLType):
     @classmethod
-    def get_query_string(cls, named: bool = True) -> str:
-        parameters: Optional[
-            type[GQLParameters]
-        ] = cls.__config__.parameters  # type: ignore
+    def get_query_string(cls, include_name: bool = True) -> str:
+        variables: Optional[
+            type[GQLVariables]
+        ] = cls.__config__.variables  # type: ignore
 
-        if not named and parameters is not None:
-            # TODO Find a better exception type
-            raise Exception("Query with parameters must have a name")
+        if variables and not include_name:
+            raise QueryGenerationError("Query with variables must include a name")
 
-        def _gen():
-            if named:
-                params = "".join(_gen_parameter_string(parameters))
-                yield "query " + cls.__name__ + params + " {"
+        def _generate():
+            if include_name:
+                variables_str = _get_variables_string(variables)
+                yield "query " + cls.__name__ + variables_str + " {"
             else:
                 yield "query {"
-            for line in cls.generate_query_lines(nest_level=1):
-                yield line
+            for line in cls.generate_query_lines():
+                yield "  " + line
             yield "}"
 
-        return "\n".join(_gen())
+        return "\n".join(_generate())
 
     class Config(pydantic.BaseConfig):
-        parameters: Optional[type[GQLParameters]] = None
+        variables: Optional[type[GQLVariables]] = None
 
 
-def _gen_parameter_string(parameters: Optional[type[GQLParameters]]) -> Iterator[str]:
-    if parameters is None or not parameters.__fields__:
-        return
-    yield "("
-    for field, is_first in zip(parameters.__fields__.values(), first_only()):
-        if not is_first:
-            yield ", "
-        yield "$"
-        yield field.alias
-        yield ": "
-        yield class_to_graphql_type(field.type_, allow_none=field.allow_none)
-    yield ")"
+def _get_variables_string(variables: Optional[type[GQLVariables]]) -> str:
+    if variables is None or not variables.__fields__:
+        return ""
+
+    def _generate():
+        for field in variables.__fields__.values():
+            yield "$" + field.alias + ": " + class_to_graphql_type(
+                field.type_, allow_none=field.allow_none
+            )
+
+    return "(" + ", ".join(_generate()) + ")"

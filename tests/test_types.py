@@ -4,7 +4,7 @@ from pygraphic.types import class_to_graphql_type, register_graphql_type
 
 
 def test_class_to_typename_crashes_on_unknown_class():
-    with pytest.raises(KeyError) as e_info:
+    with pytest.raises(TypeError) as e_info:
         class_to_graphql_type(object, allow_none=True)
 
 

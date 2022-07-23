@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import Any
 
 import pydantic
@@ -14,7 +12,7 @@ from .defaults import default_alias_generator
 class ModelMetaclass(pydantic.main.ModelMetaclass):
     def __getattr__(cls, __name: str) -> Any:
         try:
-            mcs: type[GQLParameters] = cls  # type: ignore
+            mcs: type[GQLVariables] = cls  # type: ignore
             return mcs.__fields__[__name]
         except KeyError:
             raise AttributeError(
@@ -22,7 +20,7 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
             )
 
 
-class GQLParameters(pydantic.BaseModel, metaclass=ModelMetaclass):
+class GQLVariables(pydantic.BaseModel, metaclass=ModelMetaclass):
     def json(self, **kwargs: Any) -> str:
         return super().json(by_alias=True, **kwargs)
 
