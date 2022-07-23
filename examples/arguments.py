@@ -26,7 +26,7 @@ class Query(GQLQuery):
 
 
 # Generate the GraphQL query string and instantiate variables
-query_str = Query.get_query_string(named=False)
+query_str = Query.get_query_string(include_name=False)
 print(query_str)
 
 

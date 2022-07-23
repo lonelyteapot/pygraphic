@@ -11,17 +11,17 @@ from .types import class_to_graphql_type
 
 class GQLQuery(GQLType):
     @classmethod
-    def get_query_string(cls, named: bool = True) -> str:
+    def get_query_string(cls, include_name: bool = True) -> str:
         variables: Optional[
             type[GQLVariables]
         ] = cls.__config__.variables  # type: ignore
 
-        if not named and variables is not None:
+        if variables and not include_name:
             # TODO Find a better exception type
             raise Exception("Query with variables must have a name")
 
-        def _gen():
-            if named:
+        def _generate():
+            if include_name:
                 variables_str = _get_variables_string(variables)
                 yield "query " + cls.__name__ + variables_str + " {"
             else:
@@ -30,7 +30,7 @@ class GQLQuery(GQLType):
                 yield line
             yield "}"
 
-        return "\n".join(_gen())
+        return "\n".join(_generate())
 
     class Config(pydantic.BaseConfig):
         variables: Optional[type[GQLVariables]] = None
