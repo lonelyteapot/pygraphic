@@ -37,81 +37,76 @@ incorrectly. The API may change at any time.
 
 See [ROADMAP.md][Roadmap] for the list of implemented/missing features.
 
-## Example
+## Examples
 
-### Server schema
+Examples are kept in the
+[/examples](https://github.com/lonelyteapot/pygraphic/tree/main/examples) folder.  
+Queries that they're expected to produce are stored in the
+[/golden_files](https://github.com/lonelyteapot/pygraphic/tree/main/folden_files)
+folder.
 
-``` gql
-type User {
-  id: int!
-  username: String!
-  friends: [User!]!
-}
-```
+Most examples are based on [GitHub's GraphQL API](https://docs.github.com/en/graphql).
+If you want to run them, you need to 
+[generate a personal access token](https://github.com/settings/tokens) and assign it to
+the environment variable called `GITHUB_TOKEN` (with VSCode, the best way to do this is
+to create a [`.env` file](https://www.dotenv.org/env) in the project's root directory).
 
-### get_all_users.py
-
-``` python
-from __future__ import annotations
-from pygraphic import GQLQuery, GQLType
-
-class User(GQLType):
-    id: int
-    username: str
-    friends: list[UserFriend]
-
-class UserFriend(GQLType):
-    id: int
-    username: str
-
-class GetAllUsers(GQLQuery):
-    users: list[User]
-```
+Here's the gist:
 
 ### main.py
 
 ``` python
+import os
 import requests
-from .get_all_users import GetAllUsers
+from pygraphic import GQLQuery, GQLType
 
-# Generate query string
-gql = GetAllUsers.get_query_string()
+# Define data models
+class License(GQLType):
+    id: str
+    name: str
+    description: str
+
+# Define query model
+class GetAllLicenses(GQLQuery):
+    licenses: list[License]
+
+# Generate the GraphQL query string
+query_str = GetAllLicenses.get_query_string()
 
 # Make the request
-url = "http://127.0.0.1/graphql"
-response = requests.post(url, json={"query": gql})
+TOKEN = os.environ["GITHUB_TOKEN"]
+response = requests.post(
+    url="https://api.github.com/graphql",
+    json={
+        "query": query_str,
+    },
+    headers={
+        "Authorization": f"bearer {TOKEN}",
+    },
+)
 
-# Extract data from the response
-json = response.json()
-data = json.get("data")
-if data is None:
-    raise Exception("Query failed", json.get("error"))
+# Parse the response
+response_data = response.json().get('data')
+if response_data is None:
+    print('Query failed')
+result = GetAllLicenses.parse_obj(response_data)
 
-# Parse the data
-result = GetAllUsers.parse_obj(data)
-
-# Print validated data
-for user in result.users:
-    print(user.username)
-    print(user.friends)
+# Print the results
+for license in result.licenses:
+    print(license.name)
 ```
 
 ### Generated query string
 
 ``` gql
-query GetAllUsers {
-  users {
+query GetAllLicenses {
+  licenses {
     id
-    username
-    friends {
-      id
-      username
-    }
+    name
+    description
   }
 }
 ```
-
-See more in [/examples](https://github.com/lonelyteapot/pygraphic/tree/main/examples).
 
 ## Contribution
 

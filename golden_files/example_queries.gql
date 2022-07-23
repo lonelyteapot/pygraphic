@@ -1,0 +1,7 @@
+query GetAllLicenses {
+  licenses {
+    name
+    featured
+    url
+  }
+}

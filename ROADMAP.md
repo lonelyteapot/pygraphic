@@ -8,7 +8,7 @@
 - [ ] Aliases
 - [ ] Fragments
 - [x] Operation name
-- [x] **Variables** (defaults not yet implemented)
+- [x] **Variables**
 - [ ] Directives
 - [ ] **Mutations** ([#8])
 - [x] Inline fragments ([#14])

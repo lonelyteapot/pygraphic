@@ -4,18 +4,13 @@ from enum import Enum, auto
 import requests
 from pydantic import Field
 
-from pygraphic import GQLParameters, GQLQuery, GQLType
+from pygraphic import GQLQuery, GQLType
 
 
 # Define enums
 class SearchType(Enum):
     REPOSITORY = auto()
-    USER = auto()
-
-
-# Define query parameters (variables)
-class Parameters(GQLParameters):
-    query: str
+    # GitHub API has more enum values, but they're not necessary here
 
 
 # Define data models
@@ -23,26 +18,21 @@ class Repository(GQLType):
     resource_path: str
 
 
-class SearchResultItemEdge(GQLType):
-    node: Repository | object
-
-
 class SearchResultItemConnection(GQLType):
-    edges: list[SearchResultItemEdge]
+    nodes: list[Repository | object]
 
 
 # Define query model and attach variables model to it
-class SearchRepositories(GQLQuery, parameters=Parameters):
+class SearchRepositories(GQLQuery):
     search: SearchResultItemConnection = Field(
         type=SearchType.REPOSITORY,
-        query=Parameters.query,
+        query="pydantic",
         first=10,
     )
 
 
-# Generate the GraphQL query string and instantiate variables
+# Generate the GraphQL query string
 query_str = SearchRepositories.get_query_string()
-query_params = Parameters(query="example")
 
 
 # Make the request
@@ -52,7 +42,6 @@ response = requests.post(
     url=URL,
     json={
         "query": query_str,
-        "variables": query_params.json(),
     },
     headers={
         "Authorization": f"bearer {TOKEN}",
@@ -67,6 +56,6 @@ result = SearchRepositories.parse_obj(response_data)
 
 
 # Print the results
-print(f"Repositories containing '{query_params.query}':")
-for edge in result.search.edges:
-    print(repr(edge.node))
+print("Repositories containing 'pydantic':")
+for repository in result.search.nodes:
+    print(repr(repository))

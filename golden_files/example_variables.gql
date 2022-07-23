@@ -1,0 +1,10 @@
+query PygraphicPullRequests($repoOwner: String!, $repoName: String!, $pullRequestsCount: Int!) {
+  repository(owner: $repoOwner, name: $repoName) {
+    url
+    pullRequests(last: $pullRequestsCount) {
+      nodes {
+        title
+      }
+    }
+  }
+}
