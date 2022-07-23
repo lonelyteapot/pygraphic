@@ -8,7 +8,6 @@ from typing import Any, Iterator
 import pydantic
 from pydantic.fields import ModelField
 
-from ._utils import first_only
 from .defaults import default_alias_generator
 
 
@@ -18,7 +17,7 @@ class GQLType(pydantic.BaseModel):
         fields = typing.get_type_hints(cls)
         for field_name, field_type in fields.items():
             field = cls.__fields__[field_name]
-            arguments_str = "".join(_gen_arguments_string(field.field_info.extra))
+            arguments_str = _get_arguments_string(field.field_info.extra)
             if typing.get_origin(field_type) is list:
                 args = typing.get_args(field_type)
                 assert len(args) == 1
@@ -55,20 +54,19 @@ class GQLType(pydantic.BaseModel):
         allow_population_by_field_name = True
 
 
-def _gen_arguments_string(arguments: dict[str, Any]) -> Iterator[str]:
+def _get_arguments_string(arguments: dict[str, Any]) -> str:
     if not arguments:
-        return
-    yield "("
-    for (name, value), is_first in zip(arguments.items(), first_only()):
-        if not is_first:
-            yield ", "
-        yield default_alias_generator(name)
-        yield ": "
+        return ""
+
+    def _serialize_value(value: Any) -> str:
         if type(value) is ModelField:
-            yield "$" + value.alias
-            continue
+            return "$" + value.alias
         if isinstance(value, Enum):
-            yield value.name
-            continue
-        yield json.dumps(value, indent=None, default=str)
-    yield ")"
+            return value.name
+        return json.dumps(value, indent=None, default=str)
+
+    def _generate():
+        for name, value in arguments.items():
+            yield default_alias_generator(name) + ": " + _serialize_value(value)
+
+    return "(" + ", ".join(_generate()) + ")"
