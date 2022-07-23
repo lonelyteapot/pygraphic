@@ -9,6 +9,7 @@ import pydantic
 from pydantic.fields import ModelField
 
 from .defaults import default_alias_generator
+from .exceptions import QueryGenerationError
 
 
 class GQLType(pydantic.BaseModel):
@@ -20,7 +21,10 @@ class GQLType(pydantic.BaseModel):
             arguments_str = _get_arguments_string(field.field_info.extra)
             if typing.get_origin(field_type) is list:
                 args = typing.get_args(field_type)
-                assert len(args) == 1
+                if len(args) != 1:
+                    raise QueryGenerationError(
+                        f"Type '{field_type}' has unexpected amount of arguments"
+                    )
                 field_type = args[0]
             if typing.get_origin(field_type) is UnionType:
                 sub_types = typing.get_args(field_type)
@@ -28,7 +32,11 @@ class GQLType(pydantic.BaseModel):
                 for sub_type in sub_types:
                     if sub_type is object:
                         continue
-                    assert issubclass(sub_type, GQLType)
+                    if not issubclass(sub_type, GQLType):
+                        raise QueryGenerationError(
+                            f"Member '{sub_type}' of a union type"
+                            f"must be a subtype of '{GQLType.__name__}'"
+                        )
                     yield "  " * (nest_level + 1) + "... on " + sub_type.__name__ + " {"
                     for line in sub_type.generate_query_lines(
                         nest_level=nest_level + 2
@@ -38,7 +46,7 @@ class GQLType(pydantic.BaseModel):
                 yield "  " * nest_level + "}"
                 continue
             if not inspect.isclass(field_type):
-                raise Exception(f"Type {field_type} not supported")
+                raise QueryGenerationError(f"Type {field_type} is not supported")
             if issubclass(field_type, GQLType):
                 field_type.update_forward_refs()
                 yield "  " * nest_level + field.alias + arguments_str + " {"

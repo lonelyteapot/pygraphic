@@ -6,6 +6,7 @@ import pydantic
 
 from ._gql_type import GQLType
 from ._gql_variables import GQLVariables
+from .exceptions import QueryGenerationError
 from .types import class_to_graphql_type
 
 
@@ -17,8 +18,7 @@ class GQLQuery(GQLType):
         ] = cls.__config__.variables  # type: ignore
 
         if variables and not include_name:
-            # TODO Find a better exception type
-            raise Exception("Query with variables must have a name")
+            raise QueryGenerationError("Query with variables must include a name")
 
         def _generate():
             if include_name:
