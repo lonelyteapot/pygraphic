@@ -25,16 +25,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.10'
+        cache: "poetry"
     - name: Switch Poetry environment
       run: poetry env use 3.10
     - name: Install dependencies
       run: poetry install
+      if: steps.setup-python.outputs.cache-hit != 'true'
     - name: Show the current package version
       run: poetry version
-    - name: Build package
-      run: poetry build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@717ba43cfbb0387f6ce311b169a825772f54d295
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Publish the package to PyPI
+      run: poetry publish -u "__token__" -p "${{ secrets.PYPI_API_TOKEN }}"
