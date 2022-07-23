@@ -19,6 +19,10 @@ class GQLType(pydantic.BaseModel):
         for field_name, field_type in fields.items():
             field = cls.__fields__[field_name]
             params = "".join(_gen_parameter_string(field.field_info.extra))
+            if typing.get_origin(field_type) is list:
+                args = typing.get_args(field_type)
+                assert len(args) == 1
+                field_type = args[0]
             if typing.get_origin(field_type) is UnionType:
                 sub_types = typing.get_args(field_type)
                 yield "  " * nest_level + field.alias + params + " {"
@@ -34,10 +38,6 @@ class GQLType(pydantic.BaseModel):
                     yield "  " * (nest_level + 1) + "}"
                 yield "  " * nest_level + "}"
                 continue
-            if typing.get_origin(field_type) is list:
-                args = typing.get_args(field_type)
-                assert len(args) == 1
-                field_type = args[0]
             if not inspect.isclass(field_type):
                 raise Exception(f"Type {field_type} not supported")
             if issubclass(field_type, GQLType):
