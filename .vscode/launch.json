@@ -30,10 +30,10 @@
             "justMyCode": true,
         },
         {
-            "name": "Example :: GitHub Unions",
+            "name": "Example :: Inline fragments",
             "type": "python",
             "request": "launch",
-            "module": "examples.github_unions.main",
+            "module": "examples.inline_fragments",
             "justMyCode": true,
         },
     ]

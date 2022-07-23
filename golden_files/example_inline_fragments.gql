@@ -1,0 +1,9 @@
+query SearchRepositories {
+  search(type: REPOSITORY, query: "pydantic", first: 10) {
+    nodes {
+      ... on Repository {
+        resourcePath
+      }
+    }
+  }
+}
