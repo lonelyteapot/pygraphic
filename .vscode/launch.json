@@ -36,5 +36,12 @@
             "module": "examples.inline_fragments",
             "justMyCode": true,
         },
+        {
+            "name": "Example :: Variables",
+            "type": "python",
+            "request": "launch",
+            "module": "examples.variables",
+            "justMyCode": true,
+        },
     ]
 }

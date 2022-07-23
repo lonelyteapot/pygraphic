@@ -21,3 +21,19 @@ def test_inline_fragments():
     assert golden_query == query_str
     assert len(result.search.nodes) == 10
     assert all(type(node) is Repository for node in result.search.nodes)
+
+
+def test_variables():
+    golden_query = (
+        Path("golden_files", "example_variables.gql").read_text("utf-8").strip()
+    )
+    from examples.variables import Variables, query_str, result, variables
+
+    golden_variables = Variables(
+        repo_owner="lonelyteapot", repo_name="pygraphic", pull_requests_count=10
+    )
+
+    assert golden_query == query_str
+    assert golden_variables == variables
+    assert result.repository.url
+    assert result.repository.pull_requests.nodes
