@@ -30,19 +30,12 @@ Pygraphic is the opposite of [turms]:
 
 5. You use the validated data, while enjoying autocompletion and type safety!
 
-## Release Checklist
+## Roadmap
 
-Pygraphic is in development stage. Major features might either be missing or work
+Pygraphic is in development stage. Some major features are missing or might work
 incorrectly. The API may change at any time.
 
-- [x] Basic queries
-- [x] Queries with parameters
-- [x] Custom scalars (not needed, comes with pydantic)
-- [x] Conversion between camelCase and snake_case
-- [ ] Mutations
-- [ ] Subscriptions
-- [x] Tests
-- [ ] Stable codebase
+See [ROADMAP.md][Roadmap] for the list of implemented/missing features.
 
 ## Example
 
@@ -143,6 +136,7 @@ Copyright &copy; 2022, Dmitry Semenov. Released under the [MIT license][License]
 [Issues]: https://github.com/lonelyteapot/pygraphic/issues
 [Pulls]: https://github.com/lonelyteapot/pygraphic/pulls
 [License]: https://github.com/lonelyteapot/pygraphic/blob/main/LICENSE
+[Roadmap]: https://github.com/lonelyteapot/pygraphic/blob/main/ROADMAP.md
 
 [pydantic]: https://pypi.org/project/pydantic/
 [turms]: https://pypi.org/project/turms/
