@@ -3,11 +3,11 @@ import os
 import requests
 from pydantic import Field
 
-from pygraphic import GQLParameters, GQLQuery, GQLType
+from pygraphic import GQLQuery, GQLType, GQLVariables
 
 
 # Define the query variables
-class Variables(GQLParameters):
+class Variables(GQLVariables):
     repo_owner: str
     repo_name: str
     pull_requests_count: int
@@ -28,7 +28,7 @@ class Repository(GQLType):
 
 
 # Define query model and attach variables to it
-class PygraphicPullRequests(GQLQuery, parameters=Variables):
+class PygraphicPullRequests(GQLQuery, variables=Variables):
     repository: Repository = Field(owner=Variables.repo_owner, name=Variables.repo_name)
 
 

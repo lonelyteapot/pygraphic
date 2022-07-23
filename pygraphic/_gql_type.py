@@ -18,14 +18,14 @@ class GQLType(pydantic.BaseModel):
         fields = typing.get_type_hints(cls)
         for field_name, field_type in fields.items():
             field = cls.__fields__[field_name]
-            params = "".join(_gen_parameter_string(field.field_info.extra))
+            arguments_str = "".join(_gen_arguments_string(field.field_info.extra))
             if typing.get_origin(field_type) is list:
                 args = typing.get_args(field_type)
                 assert len(args) == 1
                 field_type = args[0]
             if typing.get_origin(field_type) is UnionType:
                 sub_types = typing.get_args(field_type)
-                yield "  " * nest_level + field.alias + params + " {"
+                yield "  " * nest_level + field.alias + arguments_str + " {"
                 for sub_type in sub_types:
                     if sub_type is object:
                         continue
@@ -42,12 +42,12 @@ class GQLType(pydantic.BaseModel):
                 raise Exception(f"Type {field_type} not supported")
             if issubclass(field_type, GQLType):
                 field_type.update_forward_refs()
-                yield "  " * nest_level + field.alias + params + " {"
+                yield "  " * nest_level + field.alias + arguments_str + " {"
                 for line in field_type.generate_query_lines(nest_level=nest_level + 1):
                     yield line
                 yield "  " * nest_level + "}"
                 continue
-            yield "  " * nest_level + field.alias + params
+            yield "  " * nest_level + field.alias + arguments_str
             continue
 
     class Config:
@@ -55,11 +55,11 @@ class GQLType(pydantic.BaseModel):
         allow_population_by_field_name = True
 
 
-def _gen_parameter_string(parameters: dict[str, Any]) -> Iterator[str]:
-    if not parameters:
+def _gen_arguments_string(arguments: dict[str, Any]) -> Iterator[str]:
+    if not arguments:
         return
     yield "("
-    for (name, value), is_first in zip(parameters.items(), first_only()):
+    for (name, value), is_first in zip(arguments.items(), first_only()):
         if not is_first:
             yield ", "
         yield default_alias_generator(name)
