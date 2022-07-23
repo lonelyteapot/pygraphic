@@ -46,3 +46,5 @@ jobs:
         poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
     - name: Run pytest
       run: poetry run pytest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
