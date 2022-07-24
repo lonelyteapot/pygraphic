@@ -13,7 +13,7 @@
 - [ ] **Mutations** ([#8])
 - [x] Inline fragments ([#14])
 - [x] Custom scalar types
-- [x] Enumeration types ([#14])
+- [x] Enumeration types ([#23])
 - [x] Lists and Non-Null ([#4])
 - [x] Union types ([#14])
 - [ ] Input types
@@ -36,3 +36,4 @@
 [#11]: https://github.com/lonelyteapot/pygraphic/issues/11
 [#14]: https://github.com/lonelyteapot/pygraphic/issues/14
 [#20]: https://github.com/lonelyteapot/pygraphic/pull/20
+[#23]: https://github.com/lonelyteapot/pygraphic/pull/23
