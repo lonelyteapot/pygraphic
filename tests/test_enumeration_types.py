@@ -7,7 +7,6 @@ from pydantic import Field
 from pygraphic import GQLQuery, GQLVariables
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_generation_of_query_with_enum_field():
     class Foo(Enum):
         BAR = auto()

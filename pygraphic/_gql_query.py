@@ -4,7 +4,6 @@ import pydantic
 
 from ._gql_type import GQLType
 from ._gql_variables import GQLVariables
-from .exceptions import QueryGenerationError
 from .types import class_to_graphql_type
 
 
@@ -15,15 +14,10 @@ class GQLQuery(GQLType):
             type[GQLVariables]
         ] = cls.__config__.variables  # type: ignore
 
-        if variables and not include_name:
-            raise QueryGenerationError("Query with variables must include a name")
-
         def _generate():
-            if include_name:
-                variables_str = _get_variables_string(variables)
-                yield "query " + cls.__name__ + variables_str + " {"
-            else:
-                yield "query {"
+            variables_str = _get_variables_string(variables)
+            query_name = " " + cls.__name__ if include_name else ""
+            yield "query" + query_name + variables_str + " {"
             for line in cls.generate_query_lines():
                 yield "  " + line
             yield "}"

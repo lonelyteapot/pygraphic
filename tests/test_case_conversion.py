@@ -1,10 +1,8 @@
-import pytest
 from pydantic import Field
 
 from pygraphic import GQLQuery, GQLVariables
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_field_name_conversion():
     class Query(GQLQuery):
         snake_case: bool
@@ -13,7 +11,6 @@ def test_field_name_conversion():
     assert gql == "query {\n  snakeCase\n}"
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_field_argument_conversion():
     class Query(GQLQuery):
         i: int = Field(snake_case=False)
@@ -22,7 +19,6 @@ def test_field_argument_conversion():
     assert gql == "query {\n  i(snakeCase: false)\n}"
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_query_generation_variable_conversion():
     class Variables(GQLVariables):
         snake_case: bool
@@ -43,7 +39,6 @@ def test_variable_generation_conversion():
     assert json == '{"snakeCase": false}'
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_passing_variable_in_field_argument_conversion():
     class Variables(GQLVariables):
         snake_case: bool
