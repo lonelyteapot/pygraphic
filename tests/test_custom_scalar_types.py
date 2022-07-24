@@ -5,7 +5,7 @@ import pytest
 from pydantic import Field
 
 from pygraphic import GQLQuery, GQLVariables
-from pygraphic.types import register_graphql_type
+from pygraphic.serializers import register_graphql_type
 
 
 def test_generation_of_query_with_custom_scalar_types():

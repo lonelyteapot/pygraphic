@@ -29,5 +29,15 @@
             "module": "examples.variables",
             "justMyCode": true,
         },
+        {
+            "name": "Debug Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            "env": {"PYTEST_ADDOPTS": "--no-cov"},
+            "justMyCode": false,
+        },
     ]
 }

@@ -35,8 +35,10 @@ def test_variable_generation_conversion():
         snake_case: bool
 
     variables = Variables(snake_case=False)
-    json = variables.json()
-    assert json == '{"snakeCase": false}'
+    json_ = variables.json()
+    assert json_ == '{"snakeCase": false}'
+    dict_ = variables.dict()
+    assert dict_ == {"snakeCase": False}
 
 
 def test_passing_variable_in_field_argument_conversion():
