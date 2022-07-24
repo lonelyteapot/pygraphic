@@ -1,4 +1,18 @@
 # pygraphic
+<p>
+<a href="https://pypi.org/project/pygraphic" target="_blank">
+    <img src="https://img.shields.io/pypi/status/pygraphic" alt="Status">
+</a>
+<a href="https://pypi.org/project/pygraphic" target="_blank">
+    <img src="https://img.shields.io/pypi/v/pygraphic" alt="Version">
+</a>
+<a href="https://github.com/lonelyteapot/pygraphic/actions/workflows/test.yml?query=branch%3Amain" target="_blank">
+    <img src="https://img.shields.io/github/workflow/status/lonelyteapot/pygraphic/Unit%20tests/main?label=tests" alt="Tests">
+</a>
+<a href="https://codecov.io/gh/lonelyteapot/pygraphic" target="_blank">
+    <img src="https://img.shields.io/codecov/c/github/lonelyteapot/pygraphic" alt="Coverage">
+</a>
+</p>
 
 Client-side GraphQL query generator based on [pydantic].
 
