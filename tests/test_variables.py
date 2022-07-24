@@ -1,6 +1,5 @@
 from typing import Optional
 
-import pytest
 from pydantic import Field
 
 from pygraphic import GQLQuery, GQLVariables

@@ -1,14 +1,13 @@
-from enum import Enum, auto
+from enum import auto
 from typing import Optional
 
-import pytest
 from pydantic import Field
 
-from pygraphic import GQLQuery, GQLVariables
+from pygraphic import GQLEnum, GQLQuery, GQLVariables
 
 
 def test_generation_of_query_with_enum_field():
-    class Foo(Enum):
+    class Foo(GQLEnum):
         BAR = auto()
 
     class Query(GQLQuery):
@@ -18,9 +17,8 @@ def test_generation_of_query_with_enum_field():
     assert gql == "query {\n  baz\n}"
 
 
-@pytest.mark.skip("Parsing enum from query field not yet implemented")
 def test_parsing_enum_from_query_field():
-    class Foo(Enum):
+    class Foo(GQLEnum):
         BAR = auto()
 
     class Query(GQLQuery):
@@ -30,12 +28,11 @@ def test_parsing_enum_from_query_field():
         "baz": "BAR",
     }
     result = Query.parse_obj(data)
-
     assert result.baz == Foo.BAR
 
 
 def test_passing_enum_as_field_argument():
-    class Foo(Enum):
+    class Foo(GQLEnum):
         BAR = auto()
 
     class Query(GQLQuery):
@@ -45,9 +42,8 @@ def test_passing_enum_as_field_argument():
     assert gql == "query {\n  i(ia: BAR)\n}"
 
 
-@pytest.mark.skip("Passing enum as query variable not yet implemented")
 def test_passing_enum_as_query_variable():
-    class Foo(Enum):
+    class Foo(GQLEnum):
         BAR = auto()
 
     class Variables(GQLVariables):
@@ -57,12 +53,11 @@ def test_passing_enum_as_query_variable():
         pass
 
     gql = Query.get_query_string(include_name=False)
-    assert gql == "query($baz: Foo) {\n}"
+    assert gql == "query($baz: Foo!) {\n}"
 
 
-@pytest.mark.skip("Passing enum as query variable not yet implemented")
 def test_passing_enum_as_default_query_variable():
-    class Foo(Enum):
+    class Foo(GQLEnum):
         BAR = auto()
 
     class Variables(GQLVariables):
