@@ -4,8 +4,7 @@ from uuid import UUID
 import pytest
 from pydantic import Field
 
-from pygraphic import GQLQuery, GQLType, GQLVariables
-from pygraphic.exceptions import QueryGenerationError
+from pygraphic import GQLQuery, GQLVariables
 from pygraphic.types import register_graphql_type
 
 
@@ -51,7 +50,6 @@ def test_passing_custom_scalar_types_as_field_arguments():
     )
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_fail_of_using_custom_scalar_types_in_query_variables_without_registration():
     class Variables(GQLVariables):
         uuid: UUID
@@ -64,7 +62,6 @@ def test_fail_of_using_custom_scalar_types_in_query_variables_without_registrati
         Query.get_query_string(include_name=False)
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_using_custom_scalar_types_in_query_variables():
     class Variables(GQLVariables):
         uuid: UUID

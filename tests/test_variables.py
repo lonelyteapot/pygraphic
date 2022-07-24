@@ -58,7 +58,6 @@ def test_creation_of_query_with_variables():
     Query()
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_generation_of_unnamed_query_with_empty_variables():
     class Variables(GQLVariables):
         pass
@@ -81,7 +80,6 @@ def test_generation_of_named_query_with_empty_variables():
     assert gql == "query Query {\n}"
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_generation_of_unnamed_query_with_variables():
     class Variables(GQLVariables):
         i: int
@@ -128,7 +126,6 @@ def test_generation_of_query_with_default_arguments():
     )
 
 
-@pytest.mark.skip("Unnamed queries with parameters are not yet implemented")
 def test_passing_variables_as_field_arguments():
     class Variables(GQLVariables):
         i: int

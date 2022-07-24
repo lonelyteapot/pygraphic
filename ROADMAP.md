@@ -23,7 +23,7 @@
 
 - [x] Conversion between camelCase and snake_case ([#5])
 - [ ] Iteration over remote connections (de-pagination) ([#11])
-- [ ] High test coverage (> 90%)
+- [x] High test coverage (> 90%) ([#20])
 - [ ] Extensive documentation ([#7])
 - [ ] Stable codebase
 
@@ -35,3 +35,4 @@
 [#9]: https://github.com/lonelyteapot/pygraphic/issues/9
 [#11]: https://github.com/lonelyteapot/pygraphic/issues/11
 [#14]: https://github.com/lonelyteapot/pygraphic/issues/14
+[#20]: https://github.com/lonelyteapot/pygraphic/pull/20
