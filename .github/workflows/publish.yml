@@ -1,4 +1,4 @@
-name: Upload Python Package
+name: Publish Release
 
 on:
   release:
@@ -9,16 +9,14 @@ permissions:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: Install Poetry
-      run: pipx install poetry==1.2.0b2
+      run: pipx install poetry==1.2.0b3
     - name: Install dynamic versioning plugin
       run: poetry self add poetry-dynamic-versioning-plugin
     - name: Install Python
@@ -34,4 +32,4 @@ jobs:
     - name: Show the current package version
       run: poetry version
     - name: Publish the package to PyPI
-      run: poetry publish -u "__token__" -p "${{ secrets.PYPI_API_TOKEN }}"
+      run: poetry publish --build -u "__token__" -p "${{ secrets.PYPI_API_TOKEN }}"
