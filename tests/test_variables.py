@@ -41,8 +41,10 @@ def test_generation_of_variables():
         b: Optional[bool]
 
     variables = Variables(i=0, f=0.0, s="foo", b=None)
-    json = variables.json()
-    assert json == '{"i": 0, "f": 0.0, "s": "foo", "b": null}'
+    json_ = variables.json()
+    assert json_ == '{"i": 0, "f": 0.0, "s": "foo", "b": null}'
+    dict_ = variables.dict()
+    assert dict_ == {"i": 0, "f": 0.0, "s": "foo", "b": None}
 
 
 def test_creation_of_query_with_variables():
@@ -133,8 +135,10 @@ def test_generation_of_variables_excludes_defaults():
         b: Optional[bool] = Field(default=None)
 
     variables = Variables(b=None)
-    json = variables.json()
-    assert json == '{"i": 0, "f": 0.0, "b": null}'
+    json_ = variables.json()
+    assert json_ == '{"i": 0, "f": 0.0, "b": null}'
+    dict_ = variables.dict()
+    assert dict_ == {"i": 0, "f": 0.0, "b": None}
 
 
 def test_generation_of_variables_without_excluding_defaults():
@@ -145,8 +149,10 @@ def test_generation_of_variables_without_excluding_defaults():
         b: Optional[bool] = Field(default=None)
 
     variables = Variables(b=None)
-    json = variables.json(exclude_defaults=False)
-    assert json == '{"i": 0, "f": 0.0, "s": "foo", "b": null}'
+    json_ = variables.json(exclude_defaults=False)
+    assert json_ == '{"i": 0, "f": 0.0, "s": "foo", "b": null}'
+    dict_ = variables.dict(exclude_defaults=False)
+    assert dict_ == {"i": 0, "f": 0.0, "s": "foo", "b": None}
 
 
 def test_passing_variables_as_field_arguments():

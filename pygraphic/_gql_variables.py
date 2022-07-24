@@ -21,13 +21,20 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
 
 
 class GQLVariables(pydantic.BaseModel, metaclass=ModelMetaclass):
+    def _get_unset_defaults(self) -> set[str]:
+        unset_defaults = set[str]()
+        for field_name, field in self.__fields__.items():
+            if (field_name in self.__fields_set__) or (not field.allow_none):
+                continue
+            unset_defaults.add(field_name)
+        return unset_defaults
+
+    def dict(self, exclude_defaults: bool = True, **kwargs: Any) -> dict[str, Any]:
+        exclude = self._get_unset_defaults() if exclude_defaults else set()
+        return super().dict(by_alias=True, exclude=exclude, **kwargs)
+
     def json(self, exclude_defaults: bool = True, **kwargs: Any) -> str:
-        exclude = set[str]()
-        if exclude_defaults:
-            for field_name, field in self.__fields__.items():
-                if (field_name in self.__fields_set__) or (not field.allow_none):
-                    continue
-                exclude.add(field_name)
+        exclude = self._get_unset_defaults() if exclude_defaults else set()
         return super().json(by_alias=True, exclude=exclude, **kwargs)
 
     class Config:
