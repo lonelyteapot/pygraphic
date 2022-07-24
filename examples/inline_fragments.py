@@ -1,14 +1,14 @@
 import os
-from enum import Enum, auto
+from enum import auto
 
 import requests
 from pydantic import Field
 
-from pygraphic import GQLQuery, GQLType
+from pygraphic import GQLEnum, GQLQuery, GQLType
 
 
 # Define enums
-class SearchType(Enum):
+class SearchType(GQLEnum):
     REPOSITORY = auto()
     # GitHub API has more enum values, but they're not necessary here
 

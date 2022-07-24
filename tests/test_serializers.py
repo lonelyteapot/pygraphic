@@ -1,8 +1,8 @@
-from enum import Enum, auto
+from enum import auto
 
 import pytest
 
-from pygraphic import GQLVariables
+from pygraphic import GQLEnum, GQLVariables
 from pygraphic.serializers import (
     class_to_graphql,
     register_graphql_type,
@@ -20,7 +20,7 @@ def test_basic_scalars_to_graphql():
 
 
 def test_enum_to_graphql():
-    class Foo(Enum):
+    class Foo(GQLEnum):
         BAR = auto()
 
     assert value_to_graphql(Foo.BAR) == "BAR"

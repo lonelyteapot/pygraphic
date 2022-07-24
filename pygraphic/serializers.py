@@ -19,12 +19,12 @@ def register_graphql_type(graphql_type: str, python_class: type) -> None:
 
 
 def class_to_graphql(cls: type, allow_none: bool) -> str:
+    suffix = "" if allow_none else "!"
+    if issubclass(cls, Enum):
+        return cls.__name__ + suffix
     try:
         type_ = _class_mapping[cls]
-        if allow_none:
-            return type_
-        else:
-            return type_ + "!"
+        return type_ + suffix
     except KeyError:
         raise TypeError(
             f"Type '{cls}' could not be converted to a GraphQL type."
