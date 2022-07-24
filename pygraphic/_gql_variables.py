@@ -29,13 +29,23 @@ class GQLVariables(pydantic.BaseModel, metaclass=ModelMetaclass):
             unset_defaults.add(field_name)
         return unset_defaults
 
-    def dict(self, exclude_defaults: bool = True, **kwargs: Any) -> dict[str, Any]:
+    def dict(
+        self,
+        by_alias: bool = True,
+        exclude_defaults: bool = True,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
         exclude = self._get_unset_defaults() if exclude_defaults else set()
-        return super().dict(by_alias=True, exclude=exclude, **kwargs)
+        return super().dict(by_alias=by_alias, exclude=exclude, **kwargs)
 
-    def json(self, exclude_defaults: bool = True, **kwargs: Any) -> str:
+    def json(
+        self,
+        by_alias: bool = True,
+        exclude_defaults: bool = True,
+        **kwargs: Any,
+    ) -> str:
         exclude = self._get_unset_defaults() if exclude_defaults else set()
-        return super().json(by_alias=True, exclude=exclude, **kwargs)
+        return super().json(by_alias=by_alias, exclude=exclude, **kwargs)
 
     class Config:
         alias_generator = default_alias_generator
