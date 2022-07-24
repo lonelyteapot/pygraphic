@@ -5,7 +5,7 @@ import pydantic.main
 from pydantic.fields import Field, FieldInfo
 from pydantic.main import __dataclass_transform__
 
-from .defaults import default_alias_generator
+from .serializers import key_to_graphql
 
 
 @__dataclass_transform__(kw_only_default=True, field_descriptors=(Field, FieldInfo))
@@ -48,5 +48,5 @@ class GQLVariables(pydantic.BaseModel, metaclass=ModelMetaclass):
         return super().json(by_alias=by_alias, exclude=exclude, **kwargs)
 
     class Config:
-        alias_generator = default_alias_generator
+        alias_generator = key_to_graphql
         allow_population_by_field_name = True

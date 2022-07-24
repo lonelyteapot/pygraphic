@@ -4,7 +4,7 @@ import pydantic
 
 from ._gql_type import GQLType
 from ._gql_variables import GQLVariables
-from .types import class_to_graphql_type
+from .serializers import class_to_graphql, value_to_graphql
 
 
 class GQLQuery(GQLType):
@@ -34,8 +34,7 @@ def _get_variables_string(variables: Optional[type[GQLVariables]]) -> str:
 
     def _generate():
         for field in variables.__fields__.values():
-            yield "$" + field.alias + ": " + class_to_graphql_type(
-                field.type_, allow_none=field.allow_none
-            )
+            type_str = class_to_graphql(field.type_, allow_none=field.allow_none)
+            yield "$" + field.alias + ": " + type_str
 
     return "(" + ", ".join(_generate()) + ")"

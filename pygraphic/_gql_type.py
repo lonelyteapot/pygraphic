@@ -1,15 +1,12 @@
 import inspect
-import json
 import typing
-from enum import Enum
 from types import UnionType
 from typing import Any, Iterator
 
 import pydantic
-from pydantic.fields import ModelField
 
-from .defaults import default_alias_generator
 from .exceptions import QueryGenerationError
+from .serializers import key_to_graphql, value_to_graphql
 
 
 class GQLType(pydantic.BaseModel):
@@ -56,7 +53,7 @@ class GQLType(pydantic.BaseModel):
             continue
 
     class Config:
-        alias_generator = default_alias_generator
+        alias_generator = key_to_graphql
         allow_population_by_field_name = True
 
 
@@ -64,15 +61,8 @@ def _get_arguments_string(arguments: dict[str, Any]) -> str:
     if not arguments:
         return ""
 
-    def _serialize_value(value: Any) -> str:
-        if type(value) is ModelField:
-            return "$" + value.alias
-        if isinstance(value, Enum):
-            return value.name
-        return json.dumps(value, indent=None, default=str)
-
     def _generate():
         for name, value in arguments.items():
-            yield default_alias_generator(name) + ": " + _serialize_value(value)
+            yield key_to_graphql(name) + ": " + value_to_graphql(value)
 
     return "(" + ", ".join(_generate()) + ")"

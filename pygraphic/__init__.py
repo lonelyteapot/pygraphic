@@ -1,7 +1,7 @@
-from . import defaults, exceptions, types
+from . import exceptions, serializers
 from ._gql_query import GQLQuery
 from ._gql_type import GQLType
 from ._gql_variables import GQLVariables
 
 
-__all__ = ["defaults", "exceptions", "GQLVariables", "GQLType", "GQLQuery", "types"]
+__all__ = ["exceptions", "GQLVariables", "GQLType", "GQLQuery", "serializers"]
