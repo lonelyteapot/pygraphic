@@ -21,8 +21,14 @@ class ModelMetaclass(pydantic.main.ModelMetaclass):
 
 
 class GQLVariables(pydantic.BaseModel, metaclass=ModelMetaclass):
-    def json(self, **kwargs: Any) -> str:
-        return super().json(by_alias=True, **kwargs)
+    def json(self, exclude_defaults: bool = True, **kwargs: Any) -> str:
+        exclude = set[str]()
+        if exclude_defaults:
+            for field_name, field in self.__fields__.items():
+                if (field_name in self.__fields_set__) or (not field.allow_none):
+                    continue
+                exclude.add(field_name)
+        return super().json(by_alias=True, exclude=exclude, **kwargs)
 
     class Config:
         alias_generator = default_alias_generator
